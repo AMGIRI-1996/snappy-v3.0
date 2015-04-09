@@ -1,0 +1,313 @@
+<!DOCTYPE html>
+<html>
+  <head>
+		<title>snappy bird</title>
+		
+    <style>
+#footer{padding:10px;position:fixed;width:100%;height:5%;top:95%;background-color:black;color:wheat;left:0;opacity:0.8;}
+	
+#scoreb
+{
+	position:fixed;
+	top:5px;
+	left:44.44%;
+	height:50px;
+	width:11.11%;
+	font-size: 10pt;
+	color:red;
+	text-align:center;
+	background-color:Green;
+}
+#pause{
+float:center;
+	height:100% ;/*690*/
+	width:11.11%;/*1350*/
+	font-size: 10pt;
+	color:red;
+	text-align:center;
+	background-color:black;
+	display:box;
+	border-radius:15px;
+	background:linear-gradient(#666,#333);
+	background:-webkit-gradient(linear,right bottom,left top,from(#666),to(#333));
+	margin-right:10px;
+}
+button:hover
+{background:linear-gradient(#333,#666);
+	background:-webkit-gradient(linear,right bottom,left top,from(#999),to(#666));
+}
+#play,#up{
+float:center;
+	height:100%;
+	width:25.93%;
+	font-size: 10pt;
+	color:red;
+	text-align:center;
+	background-color:black;
+	display:box;
+	border-radius:15px;
+	margin-right:10px;
+	margin-left:0px;
+	
+	/*background:linear-gradient(#666,#333);
+	background:-webkit-gradient(linear,right bottom,left top,from(#666),to(#333));*/
+}
+#box1
+{
+	
+	position:absolute;
+	top:10px;
+	left:0px;
+	height:500px;
+	width:2900px;
+
+	background-image:url(img2.jpg);
+	background-size:20% 100%;
+	
+}
+#box2
+{
+	
+	position:absolute;
+	top:0px;
+	left:0px;
+	height:500px;
+	width:2900px;
+    background-color:Black;
+	opacity:0.8;
+	
+}
+#box
+{
+	
+	position:absolute;
+	top:0px;
+	left:0px;
+	height:500px;
+	width:2900px;
+	font-size: 40pt;
+	color:red;
+	
+	border-bottom:5px solid green;
+}
+#buttons
+{
+	position:absolute;
+	top:520px;
+	left:7.4%;
+	height:14.49%;
+	width:100%;
+	margin-top:0px;
+	
+}
+#bird
+{
+	height:30px;
+	width:30px;
+}
+#bar0,#bar1,#bar2,#bar3,#bar4
+{
+	height:500px;
+	width:100px;
+}
+
+	</style>
+			<script type="text/javascript" >
+			var bar=Array(5);
+var n=Array(5);
+var barl=Array(5);
+var sc=0,sb,x,m=200;
+//for blinking
+var blin,u;
+u=document.getElementById("up");
+/*
+u.style.background='linear-gradient(#'+666+',#'+333+')';
+u.style.background='-webkit-linear-gradient(linear,right bottom,left top,from(#'+666+'),to(#'+333+')';
+*/
+var blinc = setInterval("setColor()", 100);
+ 
+function setColor() {
+		  x = document.getElementById("play");
+  x.style.backgroundColor =( x.style.backgroundColor == "red" )? "yellow" : "red";
+}
+ 
+function stopColor() {
+  clearInterval(blinc);
+	x.style.background='linear-gradient(#'+800+',#'+333+')';
+x.style.background='-webkit-gradient(linear,right bottom,left top,from(#'+666+'),to(#'+333+')';
+	
+blin=setInterval("ub()",100);
+
+}
+
+
+function ub() {
+ u=document.getElementById("up");
+  u.style.backgroundColor =( u.style.backgroundColor == "red" )? "yellow" : "red";
+}
+function usb()
+{
+		clearInterval(blin);
+u.style.background='linear-gradient(#'+800+',#'+333+')';
+u.style.background='-webkit-gradient(linear,right bottom,left top,from(#'+666+'),to(#'+333+')';
+	}
+
+	//game
+
+var p0=550,br,bd,birdt=20,game=1,x=1;
+function init()
+{
+		for(i=0;i<5;i++)
+{
+		p=Math.floor(Math.random()*4);
+		id="bar"+i;
+		sr="bar"+p+".png";
+		
+		n[i]=p;
+		barl[i]=p0;
+		
+		sb=document.getElementById("scoreb");
+		sb.innerHTML="score: "+sc;
+		
+		
+		bar[i]=document.getElementById(id);
+		bar[i].src=sr;
+		bar[i].alt='bar'+i;
+		bar[i].style.position='absolute';
+		bar[i].style.left=barl[i]+'px';
+		
+		p0+=550;
+}
+}
+function runbar()
+{
+		for(i=0;i<5;i++)
+		{
+			bar[i].style.left=barl[i]+'px';
+			barl[i]-=10;
+			if(barl[i]==-50)
+				{sc+=10;	sb.innerHTML="score: "+sc;}
+			
+			var t=n[i]*100+10;
+			var l=t+70;
+			if((barl[i]<=80&&barl[i]>=-50)&&(birdt<t||birdt>l))
+				{game=0;exit();}
+			
+			if(barl[i]<=-450)
+			{sb.innerHTML="score: "+sc;		gbar(i);}
+		
+		}
+}
+function run()
+{
+		 br=setInterval("runbar()",100);
+}
+function gbar( i)
+{
+		p=Math.floor(Math.random()*4);
+		sr="bar"+p+".png";
+		
+		n[i]=n;
+		bar[i].src=sr;
+		barl[i]=1550;
+		bar[i].style.left=barl[i]+'px';
+		}
+function exit()
+{
+		if(game)
+		{
+		clearInterval(br);
+		clearInterval(bd);
+		}
+		else
+		{
+		clearInterval(br);
+		clearInterval(bd);
+		alert("game is over\n U scored "+sc+"points\n thanks for playing");
+		location.reload();
+		}
+}
+function mbird()
+{
+		var bird=document.getElementById("bird");
+		bird.style.position='absolute';
+		bird.style.left=50+'px';
+		bird.style.top=birdt+'px';
+		birdt+=20;
+		cond();
+		if(m>200)
+				m=200;
+}
+function mdbird()
+{birdt-=90;
+		m+=100;
+		var bird=document.getElementById("bird");
+		bird.style.position='absolute';
+		bird.style.left=50+'px';
+		bird.style.top=birdt+'px';
+		
+		cond();
+		
+}
+function move()
+{
+		bd=setInterval("mbird()",m);
+}
+function mb()
+{
+		birdt-=45;
+		m+=100;
+		var bird=document.getElementById("bird");
+		bird.style.position='absolute';
+		bird.style.left=50+'px';
+		bird.style.top=birdt+'px';
+		
+		cond();
+}
+function cond()
+{
+		for(i=0;i<5;i++)
+		{
+				var t=n[i]*100+10;
+				
+				var l=t+70;
+				if((barl[i]<=80&&barl[i]>=-50)&&(birdt<t||birdt>l))
+				{
+						game=0;
+						exit();
+				}
+		}
+		if(birdt<=10||birdt>480)
+		{
+						game=0;
+						exit();
+		}
+}
+
+
+				</script>
+  </head>
+  <body onload="init();score()" bgcolor="gray">
+		<div id="box1">
+		<div id="box2">
+		<div id="box">
+		<img id="bar0">
+			<img id="bar1">
+				<img id="bar2">
+					<img id="bar3">
+						<img id="bar4">
+		<img src="bird.jpg" id="bird">
+		</div>
+		</div>
+		</div>
+		<div id="buttons" >
+		<button type="submit" accesskey="s" onclick="run();move();stopColor(); "id="play">play</button>
+		<button type="submit" accesskey=" " onclick="exit();" id="pause">pause</button>
+		<button type="submit"accesskey="a" onclick="mb();usb()" ondblclick="md" id="up">up</button>
+			<div id="scoreb">
+			</div>
+		</div>
+		<div id="footer">@nurag</div>
+
+		</body>
+</html>		
